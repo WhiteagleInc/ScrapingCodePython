@@ -1,0 +1,11 @@
+LINKS
+$x('//div[@class="news V_Title_Img"]/a/@href').map(x => x.value)
+
+TITULO
+$x('//div[@class="mb-auto"]/h2/a[@class="empresasSect"]/text()').map(x => x.wholeText)
+
+RESUMEN
+$x('//div[@class="news empresasSect"]/div[@class="lead"]/p/text()').map(x => x.wholeText)
+
+CUERPO
+$x('//div[@class="news empresasSect"]/div[@class="html-content"]/p[not(@class)]/text()').map(x => x.wholeText)
