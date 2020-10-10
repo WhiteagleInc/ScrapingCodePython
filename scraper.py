@@ -17,7 +17,7 @@ def parse_notice(link, today):
         if response.status_code == 200:
             notice = response.content.decode('utf-8')
             parsed = html.fromString(notice)
-
+            title = ''
             try:
                 title = parsed.xpath(XPATH_TITLE)[0]
                 title = title.replace('\"','')
@@ -26,7 +26,9 @@ def parse_notice(link, today):
             except IndexError:
                 return
 
-            with open(f'{today}/{title}.txt', 'w', encoding='utf-8') as f:
+
+            with open('$today/$title.txt', 'w', encoding='utf-8') as f:
+
                 f.write(title)
                 f.write('\n\n')
                 f.write(summary)
@@ -35,7 +37,7 @@ def parse_notice(link, today):
                     f.write(p)
                     f.write('\n')
         else:
-            raise ValueError(f'Error: {status_code}')
+            raise ValueError('Error: $response.status_code')
     except ValueError as ve:
         print(ve)
 
@@ -47,16 +49,13 @@ def parse_home():
             home = response.content.decode('utf-8')
             parsed = html.fromString(home)
             links_to_notices = parsed.xpath(XPATH_LINK_TO_ARTICLE)
-            #print(links_to_notices)
-
             today = datetime.date.today().strftime('%d-%m-%Y')
             if not os.path.isdir(today):
                 os.mkdir(today)
-            
             for link in links_to_notices:
                 parse_notice(link, today)
         else:
-            raise ValueError(f'Error: {response.status_code}')
+            raise ValueError('Error: $response.status_code')
     except ValueError as ve:
         print(ve)
 
