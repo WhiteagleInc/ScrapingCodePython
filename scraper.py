@@ -16,7 +16,7 @@ def parse_notice(link, today):
         response = requests.get(link)
         if response.status_code == 200:
             notice = response.content.decode('utf-8')
-            parsed = html.fromString(notice)
+            parsed = html.fromstring(notice)
             title = ''
             try:
                 title = parsed.xpath(XPATH_TITLE)[0]
@@ -47,7 +47,7 @@ def parse_home():
         response = requests.get(HOME_URL)
         if response.status_code == 200:
             home = response.content.decode('utf-8')
-            parsed = html.fromString(home)
+            parsed = html.fromstring(home)
             links_to_notices = parsed.xpath(XPATH_LINK_TO_ARTICLE)
             today = datetime.date.today().strftime('%d-%m-%Y')
             if not os.path.isdir(today):
